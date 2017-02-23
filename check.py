@@ -8,7 +8,8 @@ import sys
 
 
 def get_links(url):
-    proc = subprocess.Popen("phantomjs check.js " + url, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    command = "phantomjs /tmp/check.js " + url
+    proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = proc.stdout.read().split("\n")
     return filter(None, result)
 
