@@ -32,7 +32,7 @@ def format_result(response):
     undefined = 0
 
     for host in checked_hosts:
-        host_result = response.get(host, "UNDEFINED")
+        host_result = checked_hosts.get(host, "UNDEFINED")
         if host_result == "MALICIOUS":
             malicious += 1
         elif host_result == "SUSPICIOUS":
@@ -47,7 +47,7 @@ def format_result(response):
     result = "CLEAN"
     if malicious > 0:
         result = "MALICIOUS"
-    elif undefined / len(checked_hosts) >= 0.33:
+    elif float(undefined) / len(checked_hosts) >= 0.34:
         result = "UNDEFINED"
     elif suspicious > 0:
         result = "SUSPICIOUS"
