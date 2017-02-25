@@ -8,7 +8,7 @@ import sys
 
 
 def get_links(url):
-    command = "phantomjs /tmp/check.js " + url
+    command = "phantomjs --ignore-ssl-errors=true /tmp/check.js " + url
     proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = proc.stdout.read().split("\n")
     return filter(None, result)
@@ -47,8 +47,9 @@ def format_result(response):
     result = "CLEAN"
     if malicious > 0:
         result = "MALICIOUS"
-    elif float(undefined) / len(checked_hosts) >= 0.34:
-        result = "UNDEFINED"
+    elif len(checked_hosts) > 0:
+        if float(undefined) / len(checked_hosts) >= 0.34:
+            result = "UNDEFINED"
     elif suspicious > 0:
         result = "SUSPICIOUS"
 
@@ -68,7 +69,7 @@ if __name__ == "__main__":
         print links
         result = get_link_results(links)
         print result
-        if result.get("success", False):
+        if result.get("success", False) | len(links) == 0:
             print '{}: {}'.format(prefix, json.dumps(format_result(result)))
         else:
             print "no response received!"
