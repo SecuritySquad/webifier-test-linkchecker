@@ -69,7 +69,7 @@ if __name__ == "__main__":
         print links
         result = get_link_results(links)
         print result
-        if result.get("success", False) | len(links) == 0:
+        if result.get("success", False) or len(links) == 0:
             print '{}: {}'.format(prefix, json.dumps(format_result(result)))
         else:
             print "no response received!"
