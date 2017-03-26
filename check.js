@@ -1,20 +1,11 @@
 "use strict";
-if (!Date.prototype.toISOString) {
-    Date.prototype.toISOString = function () {
-        function pad(n) { return n < 10 ? '0' + n : n; }
-        function ms(n) { return n < 10 ? '00'+ n : n < 100 ? '0' + n : n }
-        return this.getFullYear() + '-' +
-            pad(this.getMonth() + 1) + '-' +
-            pad(this.getDate()) + 'T' +
-            pad(this.getHours()) + ':' +
-            pad(this.getMinutes()) + ':' +
-            pad(this.getSeconds()) + '.' +
-            ms(this.getMilliseconds()) + 'Z';
-    }
-}
 
 var page = require('webpage').create(),
     system = require('system');
+
+page.onError = function(msg, trace) {
+    return true;
+};
 
 if (system.args.length === 1) {
     console.log('Usage: check.js <URL>');

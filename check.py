@@ -74,4 +74,4 @@ if __name__ == "__main__":
         else:
             print "no response received!"
     else:
-        print "prefix, url or content missing"
+        print "prefix or url missing"
